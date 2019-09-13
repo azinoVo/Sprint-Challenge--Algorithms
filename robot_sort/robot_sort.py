@@ -96,10 +96,79 @@ class SortingRobot:
         """
         Sort the robot's list.
         """
-        # Fill this out
-        pass
+        # Notes
+        # Robot must check if it can_move_right and then move_right
+        # Robot must check if it can_move_left and then move_left
+        # Robot can compare current item with the one in front and return values depending using compare_item
+            # return 1 if held item is greater
+            # return -1 if held item is less
+            # return 0 if equal
+            # If either is None, return None
+        # Robot can swap_item - swap its current with the item in front of it
+        # If it tries to pick up an item while already holding one, it will swap the items instead.
+        # Robot's lights can turn on and off
 
+        # Implentation Plan
+        # I will try to implement a bubble sort since this looks very similar
+        # The game plan is to move move the biggest number to the far right with each walkthrough
+        # As we walk through the list rightward and in reverse, bigger items should automatically move to the right as well
+         # How to end the sorting:
+                # To stop the robot from performing more sorts, we would wrap the robot's processes within the "while-loop" of the lights
+                # If a swap happened within a round, continue sorting
+                # If there are no swaps, it means everything is already sorted and we end
+                # Since we can't do loops, we can use the lights as the indicator to keep sorting.
+        # The robot would do the following as part of its process:
+            # For Moving rightward <if able>
+                # Pick up the first number
+                # Compare the picked-up number with the one to the right using self.compare_item**
+                    # Check the response
+                        # if 1 or "greater", perform self.swap_item
+                            # Put the number the robot is holding down which should be the smaller of the two
+                            # Check if self.can_move_right, if true then self.move_right
+                            # Pick up the next number in the sequence
+                            # Return to self.compare_item**
+                        # if -1 or "lesser", no swaps
+                            # movement same as 1 but no swaps
+                        # if 0, perform same as -1, no swaps
+                            # movement same as 1 but no swaps
+                        # if None
+                            # We've reach the end, check if we can_move_right, if false then
+                            # Check if can_move_left and start moving leftward
+            # Moving leftward <if able>
+                # The robot's journey backwards is similar.
+                # Pick up the current number, compare_item, check the response, and move accordingly until can_move_left is false.
+                # At this point, it's the first number in sequence and we start the process again.
+           
 
+        # Pick up first number
+        self.swap_item
+        # Lights on
+        self.set_light_on()
+
+        # While lights on, keep sorting
+        while self.light_is_on() == True:
+            # Reset the lights so we can redo the while when we make a swap
+            self.set_light_off() 
+
+            # Start of List with initial number and can move right
+            while self.can_move_right == True:
+                if self.compare_item() == 1: # Current is bigger so swap and then move right
+                    self.swap_item()
+                    self.move_right()
+                    self.set_light_on() # Keep the loop going from the beginning
+                elif self.compare_item() == -1 or self.compare_item() == 0: # Current is smaller or equal
+                    self.move_right()
+
+            # End of the List and can move left; since robot looks at the one in front
+            # This should be the same as the previous but movement is opposite
+            while self.can_move_left == True:
+                 if self.compare_item() == 1:
+                    self.swap_item()
+                    self.move_left()
+                    self.set_light_on()
+                elif self.compare_item() == -1 or self.compare_item() == 0 :
+                    self.move_left()
+                
 if __name__ == "__main__":
     # Test our your implementation from the command line
     # with `python robot_sort.py`
