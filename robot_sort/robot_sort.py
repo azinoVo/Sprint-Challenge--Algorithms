@@ -112,9 +112,13 @@ class SortingRobot:
         # I will try to implement a bubble sort since this looks very similar
         # The game plan is to move move the biggest number to the far right with each walkthrough
         # As we walk through the list rightward and in reverse, bigger items should automatically move to the right as well
-        # If the robot start at the beginning, we would begin a loop to define what the robot would do at each number.
+         # How to end the sorting:
+                # To stop the robot from performing more sorts, we would wrap the robot's processes within the "while-loop" of the lights
+                # If a swap happened within a round, continue sorting
+                # If there are no swaps, it means everything is already sorted and we end
+                # Since we can't do loops, we can use the lights as the indicator to keep sorting.
         # The robot would do the following as part of its process:
-            # For Moving rightward
+            # For Moving rightward <if able>
                 # Pick up the first number
                 # Compare the picked-up number with the one to the right using self.compare_item**
                     # Check the response
@@ -130,20 +134,41 @@ class SortingRobot:
                         # if None
                             # We've reach the end, check if we can_move_right, if false then
                             # Check if can_move_left and start moving leftward
-            # Moving leftward
+            # Moving leftward <if able>
                 # The robot's journey backwards is similar.
                 # Pick up the current number, compare_item, check the response, and move accordingly until can_move_left is false.
                 # At this point, it's the first number in sequence and we start the process again.
-            # How to end the sorting:
-                # To stop the robot from performing more sorts, we would wrap the robot's processes within a while loop
-                # If a swap happened within a round, continue sorting
-                # If there are no swaps, it means everything is already sorted and we end
-            # Managing its memory using its light
-                # Since we are managing the original data set, the robot doesn't have to add much into its memory, 
-                # it only needs to do comparison and swap accordingly
-        pass
+           
 
+        # Pick up first number
+        self.swap_item
+        # Lights on
+        self.set_light_on()
 
+        # While lights on, keep sorting
+        while self.light_is_on() == True:
+            # Reset the lights so we can redo the while when we make a swap
+            self.set_light_off() 
+
+            # Start of List with initial number and can move right
+            while self.can_move_right == True:
+                if self.compare_item() == 1: # Current is bigger so swap and then move right
+                    self.swap_item()
+                    self.move_right()
+                    self.set_light_on() # Keep the loop going from the beginning
+                elif self.compare_item() == -1 or self.compare_item() == 0: # Current is smaller or equal
+                    self.move_right()
+
+            # End of the List and can move left; since robot looks at the one in front
+            # This should be the same as the previous but movement is opposite
+            while self.can_move_left == True:
+                 if self.compare_item() == 1:
+                    self.swap_item()
+                    self.move_left()
+                    self.set_light_on()
+                elif self.compare_item() == -1 or self.compare_item() == 0 :
+                    self.move_left()
+                
 if __name__ == "__main__":
     # Test our your implementation from the command line
     # with `python robot_sort.py`
