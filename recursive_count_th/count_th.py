@@ -18,11 +18,11 @@ def count_th(word, count = 0):
     # Base Case and returns the number of occurrences
     # End at conclusion of word
     if len(word) == 2:
-        if word == "th":
+        if word == "th": # last set and have th
             occurrences = count + 1
             print("FINAL", occurrences)
             return occurrences
-        else:
+        else: # Word have 2 but doesn't have "th"
             print("FINAL", occurrences)
             return occurrences
 
@@ -33,6 +33,7 @@ def count_th(word, count = 0):
             occurrences = count + 1
             print("*** th Found***", occurrences)
             # Step by one letter at a time, cutting off the letter behind it each time
+            # Send the current counter
             count_th(word[1:], occurrences)
         else:
             count_th(word[1:], occurrences)

@@ -96,7 +96,51 @@ class SortingRobot:
         """
         Sort the robot's list.
         """
-        # Fill this out
+        # Notes
+        # Robot must check if it can_move_right and then move_right
+        # Robot must check if it can_move_left and then move_left
+        # Robot can compare current item with the one in front and return values depending using compare_item
+            # return 1 if held item is greater
+            # return -1 if held item is less
+            # return 0 if equal
+            # If either is None, return None
+        # Robot can swap_item - swap its current with the item in front of it
+        # If it tries to pick up an item while already holding one, it will swap the items instead.
+        # Robot's lights can turn on and off
+
+        # Implentation Plan
+        # I will try to implement a bubble sort since this looks very similar
+        # The game plan is to move move the biggest number to the far right with each walkthrough
+        # As we walk through the list rightward and in reverse, bigger items should automatically move to the right as well
+        # If the robot start at the beginning, we would begin a loop to define what the robot would do at each number.
+        # The robot would do the following as part of its process:
+            # For Moving rightward
+                # Pick up the first number
+                # Compare the picked-up number with the one to the right using self.compare_item**
+                    # Check the response
+                        # if 1 or "greater", perform self.swap_item
+                            # Put the number the robot is holding down which should be the smaller of the two
+                            # Check if self.can_move_right, if true then self.move_right
+                            # Pick up the next number in the sequence
+                            # Return to self.compare_item**
+                        # if -1 or "lesser", no swaps
+                            # movement same as 1 but no swaps
+                        # if 0, perform same as -1, no swaps
+                            # movement same as 1 but no swaps
+                        # if None
+                            # We've reach the end, check if we can_move_right, if false then
+                            # Check if can_move_left and start moving leftward
+            # Moving leftward
+                # The robot's journey backwards is similar.
+                # Pick up the current number, compare_item, check the response, and move accordingly until can_move_left is false.
+                # At this point, it's the first number in sequence and we start the process again.
+            # How to end the sorting:
+                # To stop the robot from performing more sorts, we would wrap the robot's processes within a while loop
+                # If a swap happened within a round, continue sorting
+                # If there are no swaps, it means everything is already sorted and we end
+            # Managing its memory using its light
+                # Since we are managing the original data set, the robot doesn't have to add much into its memory, 
+                # it only needs to do comparison and swap accordingly
         pass
 
 
